@@ -10,7 +10,7 @@ class OrderController {
       return response.status(200).json({data: orders})
 
     } catch (error) {
-      return response.sendStatus(400)
+      return response.sendStatus(500)
     }
   }
 
@@ -19,14 +19,14 @@ class OrderController {
       const {id } = request.params
       const order = await OrderModel.findById(id)
 
-      if (order == null) {
-        throw "404"
+      if (order === null) {
+        throw 404
       }
 
       return response.status(200).json({data: order})
 
-    } catch (error) {
-      return response.sendStatus(404);
+    } catch (error: number) {
+      return response.sendStatus(error);
     }
   }
 
@@ -86,7 +86,7 @@ class OrderController {
         throw 404
       }
       return response.sendStatus(204);
-      
+
     } catch(error: number) {
       return response.sendStatus(error);
     }
